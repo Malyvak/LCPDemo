@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
 
 interface Logs {
   clicks: number;
   scrolls: number;
   refreshes: number;
 }
+
+const LOCAL_STORAGE_KEY = 'interactionLogs';
 
 export const useInteractionStore = defineStore('interactionStore', {
   state: () => ({
@@ -15,24 +16,24 @@ export const useInteractionStore = defineStore('interactionStore', {
       refreshes: 0
     } as Logs
   }),
-  
+
   actions: {
-    async fetchLogs() {
-      try {
-        const response = await axios.get('http://localhost:3000/interactions');
-        this.logs = response.data;
-      } catch (error) {
-        console.error("Failed to fetch logs:", error);
+    initialiseLogs() {
+      const storedLogs = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedLogs) {
+        this.logs = JSON.parse(storedLogs);
       }
     },
-    
-    async logInteraction(type: keyof Logs) {
-      try {
-        await axios.post('http://localhost:3000/interactions', { type });
-        this.fetchLogs();  
-      } catch (error) {
-        console.error("Failed to log interaction:", error);
+
+    logInteraction(type: keyof Logs) {
+      if (this.logs[type] !== undefined) {
+        this.logs[type]++;
+        this.saveLogsToLocalStorage();
       }
+    },
+
+    saveLogsToLocalStorage() {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.logs));
     }
   }
 });
