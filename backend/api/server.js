@@ -13,7 +13,7 @@ app.use(cors({
   }));
 app.use(express.json());
 
-const logFilePath = path.join(__dirname, 'db.json');
+const logFilePath = path.join(__dirname, '../db.json');
 
 
 // Helper function to read logs from file
