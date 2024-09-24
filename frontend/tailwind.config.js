@@ -6,7 +6,12 @@ export default {
     './src/**/*.{vue,js,ts}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+        prompt: ['Prompt','sans-serif']
+      },
+    },
   },
   plugins: [],
 }
