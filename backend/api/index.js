@@ -11,7 +11,7 @@ app.use(cors({
     methods: ['GET', 'POST'],        
     optionsSuccessStatus: 200        
   }));
-app.use(express.json());
+// app.use(express.json());
 
 const logFilePath = path.join(__dirname, '../db.json');
 
@@ -46,9 +46,10 @@ app.get('/interactions', (req, res) => {
   res.status(200).json(interactionsData);
 });
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
 
 //Server
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log('Server is running on port 3000');
 });
 
