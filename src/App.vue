@@ -14,8 +14,8 @@ import HomeView from './views/HomeView.vue';
 
   const visible = ref(false);
 
-  type ChartType = "bar" | "pie" | "line" | undefined;
-  const currentChart = ref<ChartType>(undefined);
+  type ChartType = "bar" | "pie" | "line" | "home";
+  const currentChart = ref<ChartType>("home");
 
   const menuItems = ref([
     {
@@ -68,7 +68,7 @@ import HomeView from './views/HomeView.vue';
             <p class="pl-4">L</p>
           </ScrollPanel>
         </div>
-        <Button class="mr-4" @click="currentChart = undefined">Home</Button>
+        <Button class="mr-4" @click="currentChart = 'home'">Home</Button>
         <Button class="bg-red-500" @click="interactionStore.resetLogs">Reset</Button>
       </div>
     </nav>
@@ -76,7 +76,7 @@ import HomeView from './views/HomeView.vue';
   
   <main class="font-prompt bg-gradient-to-t from-indigo-200 h-full">
     <div class="w-full pt-36 mx-auto">
-        <HomeView v-if="!currentChart"/>
+        <HomeView v-if="currentChart == 'home'"/>
         <BarView v-if="currentChart == 'bar'"/>
         <PieView v-if="currentChart == 'pie'"/>
         <LineView v-if="currentChart == 'line'"/>
