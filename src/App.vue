@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useInteractionStore } from '@/stores/interactionStore';
-  import { ref, onMounted } from 'vue';
+  import { ref, watch, onMounted } from 'vue';
   import Button from 'primevue/button';
   import Menu from 'primevue/menu';
   import Drawer from 'primevue/drawer';
@@ -8,14 +8,20 @@
   import LineView from './views/LineView.vue';
   import PieView from './views/PieView.vue';
   import BarView from './views/BarView.vue';
-import HomeView from './views/HomeView.vue';
+  import HomeView from './views/HomeView.vue';
 
   const interactionStore = useInteractionStore();
 
   const visible = ref(false);
 
   type ChartType = "bar" | "pie" | "line" | "home";
-  const currentChart = ref<ChartType>("home");
+  const LOCAL_STORAGE_KEY = 'currentChart';
+
+  const currentChart = ref<ChartType>(localStorage.getItem(LOCAL_STORAGE_KEY) as ChartType || "home");
+
+  watch(currentChart, (newChart: ChartType) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, newChart);
+  });
 
   const menuItems = ref([
     {
