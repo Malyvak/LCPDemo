@@ -34,6 +34,11 @@ export const useInteractionStore = defineStore('interactionStore', {
 
     saveLogsToLocalStorage() {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.logs));
+    },
+
+    resetLogs() {
+      this.logs = { clicks: 0, scrolls: 0, refreshes: 0 };
+      this.saveLogsToLocalStorage(); 
     }
   }
 });
