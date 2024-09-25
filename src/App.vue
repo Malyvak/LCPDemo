@@ -75,7 +75,7 @@
           </ScrollPanel>
         </div>
         <Button class="mr-4" @click="currentChart = 'home'">Home</Button>
-        <Button class="bg-red-500" @click="interactionStore.resetLogs">Reset</Button>
+        <Button @click="interactionStore.resetLogs">Reset</Button>
       </div>
     </nav>
   </header>
