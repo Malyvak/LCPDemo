@@ -1,24 +1,28 @@
 <script setup lang="ts">
-  import { RouterView } from 'vue-router'
-  import { onMounted } from 'vue';
   import { useInteractionStore } from '@/stores/interactionStore';
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import Button from 'primevue/button';
   import Menu from 'primevue/menu';
   import Drawer from 'primevue/drawer';
   import ScrollPanel from 'primevue/scrollpanel';
-  import { useRouter } from 'vue-router'
+  import LineView from './views/LineView.vue';
+  import PieView from './views/PieView.vue';
+  import BarView from './views/BarView.vue';
+import HomeView from './views/HomeView.vue';
 
   const interactionStore = useInteractionStore();
-  const router = useRouter();
 
   const visible = ref(false);
+
+  type ChartType = "bar" | "pie" | "line" | undefined;
+  const currentChart = ref<ChartType>(undefined);
+
   const menuItems = ref([
     {
         label: 'Bar Graph',
         icon: 'pi pi-chart-bar',
         command: () => {
-          router.push('/bar')
+          currentChart.value = "bar";
           visible.value = false;
         }
     },
@@ -26,7 +30,7 @@
         label: 'Pie Chart',
         icon: 'pi pi-chart-pie',
         command: () => {
-          router.push('/pie')
+          currentChart.value = "pie";
           visible.value = false;
         }
     },
@@ -34,7 +38,7 @@
         label: 'Line Graph',
         icon: 'pi pi-chart-line',
         command: () => {
-          router.push('/line')
+          currentChart.value = "line";
           visible.value = false;
         }
     }
@@ -64,7 +68,7 @@
             <p class="pl-4">L</p>
           </ScrollPanel>
         </div>
-        <Button class="mr-4" @click="() => router.push('/')">Home</Button>
+        <Button class="mr-4" @click="currentChart = undefined">Home</Button>
         <Button class="bg-red-500" @click="interactionStore.resetLogs">Reset</Button>
       </div>
     </nav>
@@ -72,7 +76,10 @@
   
   <main class="font-prompt bg-gradient-to-t from-indigo-200 h-full">
     <div class="w-full pt-36 mx-auto">
-        <RouterView/>
+        <HomeView v-if="!currentChart"/>
+        <BarView v-if="currentChart == 'bar'"/>
+        <PieView v-if="currentChart == 'pie'"/>
+        <LineView v-if="currentChart == 'line'"/>
         <div class="flex justify-center items-center">
           <p class="text-indigo-700 mr-4 text-xl">Select Charts</p>
           <Button icon="pi pi-arrow-right" @click="visible = true" />

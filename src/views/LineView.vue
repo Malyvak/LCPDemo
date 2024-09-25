@@ -63,7 +63,9 @@ watch(() => interactionStore.logs, () =>
 </script>
 
 <template>
-    <h1 class="text-center text-2xl font-semibold tracking-wider text-indigo-700 font-roboto mb-6">Bar Graph</h1>
+    <h1 class="text-center text-2xl font-semibold tracking-wider text-indigo-700 font-roboto mb-6">
+        Line Graph
+    </h1>
     <div class="flex justify-center mb-10 w-full">
         <Chart class="w-3/4 h-48" type="line" :data="chartData" :options="chartOptions" />
     </div>

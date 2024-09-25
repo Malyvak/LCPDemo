@@ -11,7 +11,7 @@ const chartData = ref({
         {
             label: 'User Interactions',
             backgroundColor: ['rgb(59 130 246)', 'rgb(217 70 239)', 'rgb(239 68 68)'],
-            data: [0,0,0]  // This will be populated with the store data
+            data: [0,0,0]  
         }
     ],
 });
